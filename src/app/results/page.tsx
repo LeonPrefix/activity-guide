@@ -1,9 +1,10 @@
 "use client";
 
 import ResultsList from "@/components/results-list";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Results() {
+function Results() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -13,11 +14,19 @@ export default function Results() {
   const startDate = searchParams.get("start");
   const endDate = searchParams.get("end");
 
-  if (!longitude || !latitude || !radius || !startDate || !endDate) return router.push("/");
+  if (!longitude || !latitude || !radius || !startDate || !endDate) return redirect("/");
 
   return (
     <main className="flex flex-col items-center p-8">
       <ResultsList longitude={longitude} latitude={latitude} radius={radius} startDate={startDate} endDate={endDate} />
     </main>
+  );
+}
+
+export default function ResultsWrapper() {
+  return (
+    <Suspense>
+      <Results />
+    </Suspense>
   );
 }
