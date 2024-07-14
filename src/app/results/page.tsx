@@ -1,3 +1,3 @@
-export function Results() {
+export default function Results() {
   return <></>;
 }

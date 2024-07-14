@@ -66,7 +66,7 @@ export default function Search() {
           </span>
         </div>
         <Map radius={radius} marker={marker} setMarker={setMarker} />
-        <Button className="bg-green-600 hover:bg-green-700" disabled={!date?.from || !date?.to}>
+        <Button disabled={!date?.from || !date?.to}>
           <RocketIcon className="mr-2 h-4 w-4" /> Suche nach den perfekten Aktivitäten!
         </Button>
       </div>
