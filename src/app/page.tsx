@@ -8,16 +8,29 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, DoubleArrowDownIcon, RocketIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
 const DEFAULT_CENTER = { lat: 53.5488, lng: 9.9872 };
 
 export default function Search() {
+  const router = useRouter();
+
   const [radius, setRadius] = useState(500);
   const [marker, setMarker] = useState<google.maps.LatLngLiteral>(DEFAULT_CENTER);
 
   const [date, setDate] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 7) });
+
+  const handleSearch = () => {
+    if (!date?.from || !date.to) return;
+    router.push(
+      `/results?longitude=${marker.lng}&latitude=${marker.lat}&radius=${radius}&start=${format(
+        date.from,
+        "yy-MM-dd"
+      )}&end=${format(date.to, "yy-MM-dd")}`
+    );
+  };
 
   return (
     <main className="flex flex-col items-center p-8">
@@ -66,7 +79,7 @@ export default function Search() {
           </span>
         </div>
         <Map radius={radius} marker={marker} setMarker={setMarker} />
-        <Button disabled={!date?.from || !date?.to}>
+        <Button disabled={!date?.from || !date?.to} onClick={handleSearch}>
           <RocketIcon className="mr-2 h-4 w-4" /> Suche nach den perfekten Aktivitäten!
         </Button>
       </div>

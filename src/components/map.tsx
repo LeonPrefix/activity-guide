@@ -11,7 +11,7 @@ interface MapProps {
 
 export default function Map({ radius, marker, setMarker }: MapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API as string,
+    googleMapsApiKey: process.env.NODE_ENV === "development" ? "" : (process.env.NEXT_PUBLIC_GOOGLE_MAP_API as string),
     libraries: ["geometry"],
   });
 
