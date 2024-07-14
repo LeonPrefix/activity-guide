@@ -19,7 +19,7 @@ export default function ResultsList({ longitude, latitude, radius, startDate, en
     setLoading(true);
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_RESULTS_HOST}/results?longitude=${longitude}&latitude=${latitude}&radius=${radius}&start=${startDate}&end=${endDate}`
+        `/api/results?longitude=${longitude}&latitude=${latitude}&radius=${radius}&start=${startDate}&end=${endDate}`
       )
       .then((r) => setResults(r.data))
       .catch((e) => console.error(e))

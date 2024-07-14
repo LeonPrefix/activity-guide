@@ -27,8 +27,8 @@ export default function Search() {
     router.push(
       `/results?longitude=${marker.lng}&latitude=${marker.lat}&radius=${radius}&start=${format(
         date.from,
-        "yy-MM-dd"
-      )}&end=${format(date.to, "yy-MM-dd")}`
+        "yyyy-MM-dd"
+      )}&end=${format(date.to, "yyyy-MM-dd")}`
     );
   };
 
@@ -55,7 +55,7 @@ export default function Search() {
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date?.from && date?.to ? (
                   <>
-                    {format(date.from, "dd.MM.yy")} - {format(date.to, "dd.MM.yy")}
+                    {format(date.from, "dd.MM.yyyy")} - {format(date.to, "dd.MM.yyyy")}
                   </>
                 ) : (
                   <span className="animate-pulse">Wähle einen Zeitraum</span>
