@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.gm-style iframe + div {
+  border: none !important;
+}
