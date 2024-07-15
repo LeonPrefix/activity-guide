@@ -22,6 +22,7 @@ export interface Result {
       house_number: string | null;
       postcode: string;
       city: string;
+      website: string;
       categories: string[];
     }
   ];

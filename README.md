@@ -13,17 +13,17 @@ Wähle einen Ort, Radius und Zeitraum aus und erhalte maßgeschneiderte Vorschl�
 
 ## 🖥 Installation
 
-Installiere die fehlenden Bibliotheken
+Installiere Next.js und alle fehlenden Bibliotheken:
 
 ```
 pnpm install
 ```
 
-Erstelle `.env.local` mit folgenden Werten
+Erstelle eine `.env.local` Datei mit folgenden Werten:
 
 ```
 NEXT_PUBLIC_GOOGLE_MAP_API=API_KEY
-SPRING_RESULTS_HOST=BACKEND_URL
+SPRING_RESULTS_HOST=http://localhost:8080/
 ```
 
 Start das dazugehörige Backend unter: https://github.com/vaaniicx/activity-guide-api
