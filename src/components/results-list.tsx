@@ -12,7 +12,7 @@ interface ResultsListProps {
 }
 
 export default function ResultsList({ longitude, latitude, radius, startDate, endDate }: ResultsListProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<Result[]>([]);
 
   useEffect(() => {

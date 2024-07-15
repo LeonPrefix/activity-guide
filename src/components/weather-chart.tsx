@@ -28,9 +28,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function WeatherChart({ weather }: { weather: Result["weather"] }) {
-  console.log(weather);
   return (
-    <Card className="self-start">
+    <Card className="self-start sticky top-2">
       <CardHeader>
         <CardTitle className="flex items-end">
           <SunIcon className="inline mr-2" width={25} height={25} />

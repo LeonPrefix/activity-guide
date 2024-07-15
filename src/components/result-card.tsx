@@ -9,7 +9,7 @@ export default function ResultCard({ result }: { result: Result }) {
   return (
     <div>
       <div className="text-3xl font-semibold py-4">{format(result.date, "dd.MM.yy")}</div>
-      <div className="flex flex-col lg:flex-row gap-4">
+      <div className="flex flex-col lg:flex-row gap-4 relative">
         <WeatherChart weather={result.weather} />
         <div className="flex flex-col grow gap-4">
           {result.places
