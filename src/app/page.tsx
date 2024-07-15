@@ -24,7 +24,11 @@ export default function Search() {
   const Map = useMemo(
     () =>
       dynamic(() => import("@/components/map"), {
-        loading: () => <p>A map is loading</p>,
+        loading: () => (
+          <div className="bg-muted rounded w-full h-full flex justify-center items-center text-xl font-semibold font-mono animate-pulse">
+            Lade Karte...
+          </div>
+        ),
         ssr: false,
       }),
     []
