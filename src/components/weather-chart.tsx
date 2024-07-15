@@ -29,7 +29,7 @@ const chartConfig = {
 
 export function WeatherChart({ weather }: { weather: Result["weather"] }) {
   return (
-    <Card className="self-start sticky top-2">
+    <Card className="self-start sticky top-4">
       <CardHeader>
         <CardTitle className="flex items-end">
           <SunIcon className="inline mr-2" width={25} height={25} />
@@ -46,7 +46,10 @@ export function WeatherChart({ weather }: { weather: Result["weather"] }) {
           <AreaChart accessibilityLayer data={weather.hourly}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="hour" tickLine={false} axisLine={false} tickMargin={8} />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={() => "Werte"} />} />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent labelFormatter={() => "Werte"} className="w-[180px]" />}
+            />
             <Area
               dataKey="temperature"
               type="natural"

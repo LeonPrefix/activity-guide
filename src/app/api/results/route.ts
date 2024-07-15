@@ -5,7 +5,7 @@ import { z } from "zod";
 const schema = z.object({
   longitude: z.number(),
   latitude: z.number(),
-  radius: z.number().int(),
+  radius: z.number().int().min(300).max(3000),
   start: z.string().refine((v) => /\d{4}-\d{2}-\d{2}/.test(v)),
   end: z.string().refine((v) => /\d{4}-\d{2}-\d{2}/.test(v)),
 });

@@ -19,16 +19,20 @@ export default function ResultCard({ result }: { result: Result }) {
                 <CardHeader className="p-4 relative">
                   <CardTitle className="text-lg">{v.name}</CardTitle>
                   <CardDescription>
-                    {v.street} {v.house_number}, {v.postcode} {v.city}
+                    {v.street}
+                    {v.house_number && ` ${v.house_number}`}, {v.postcode} {v.city}
                   </CardDescription>
                   <Button className="absolute right-4" variant="secondary">
                     Mehr Details
                   </Button>
                 </CardHeader>
-                <CardContent className="flex gap-1 px-4">
+                <CardContent className="flex gap-1 px-4 flex-wrap w-9/12">
                   {v.categories.map((w) => (
                     <Badge className="rounded" key={w}>
-                      {w}
+                      {w
+                        .split(/\.|_/)
+                        .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                        .join(" ")}
                     </Badge>
                   ))}
                 </CardContent>
