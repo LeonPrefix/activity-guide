@@ -35,10 +35,10 @@ export function WeatherChart({ weather }: { weather: Result["weather"] }) {
         <CardTitle className="flex items-end">
           <SunIcon className="inline mr-2" width={25} height={25} />
           <span className="">
-            {weather.min_temperature} °C / {weather.max_temperature} °C
+            {Math.round(weather.min_temperature)} °C / {Math.round(weather.max_temperature)} °C
           </span>
           <BlendingModeIcon className="inline ml-6 mr-2" width={25} height={25} />
-          <span>{weather.rain_sum} mm/m²</span>
+          <span>{Math.round(weather.rain_sum)} mm/m²</span>
         </CardTitle>
         <CardDescription>Verteilung von Temperatur und Niederschlag</CardDescription>
       </CardHeader>

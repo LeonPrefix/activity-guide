@@ -31,7 +31,9 @@ export default function ResultsList({ longitude, latitude, radius, startDate, en
       <div className="flex flex-col items-center gap-2 text-center mb-8">
         <span className="font-mono text-6xl tracking-widest font-semibold">Unsere Vorschläge</span>
         <span className="text-muted-foreground text-2xl font-light">
-          Unsere Suche hat {loading ? "..." : results.length} tolle Aktivitäten für dich hervorgebracht
+          Unsere Suche hat an {loading ? "..." : results.length} Tagen{" "}
+          {loading ? "..." : results.flatMap((v) => v.places).filter((v) => v.name).length} tolle Aktivitäten für dich
+          hervorgebracht
         </span>
       </div>
       <div className="flex flex-col gap-4 w-full xl:w-[70%]">

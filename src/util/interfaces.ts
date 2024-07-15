@@ -19,7 +19,7 @@ export interface Result {
       longitude: number;
       name: string;
       street: string;
-      house_number: string;
+      house_number: string | null;
       postcode: string;
       city: string;
       categories: string[];
