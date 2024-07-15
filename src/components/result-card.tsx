@@ -32,7 +32,7 @@ export default function ResultCard({ result }: { result: Result }) {
                     {v.postcode} {v.city}
                   </CardDescription>
                   <div className="absolute right-4 flex gap-2">
-                    {v.website ? (
+                    {v.website && (
                       <Link href={v.website} target="_blank">
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -43,10 +43,6 @@ export default function ResultCard({ result }: { result: Result }) {
                           <TooltipContent>Website</TooltipContent>
                         </Tooltip>
                       </Link>
-                    ) : (
-                      <Button variant="secondary" size="icon" disabled>
-                        <Link1Icon />
-                      </Button>
                     )}
                     <Link
                       href={`https://www.google.com/maps/search/?api=1&query=${v.name} ${v.street} ${v.house_number}, ${v.city}`}
@@ -65,7 +61,7 @@ export default function ResultCard({ result }: { result: Result }) {
                 </CardHeader>
                 <CardContent className="flex gap-1 px-4 flex-wrap w-9/12">
                   {v.categories
-                    .filter((v) => !v.includes("wheelchair"))
+                    .filter((v) => !v.includes(".yes"))
                     .map((w) => (
                       <Badge className="rounded" key={w}>
                         {w
