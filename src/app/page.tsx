@@ -1,6 +1,5 @@
 "use client";
 
-import Map from "@/components/map";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -8,8 +7,10 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, DoubleArrowDownIcon, RocketIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
+import { LatLngLiteral } from "leaflet";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
 
 const DEFAULT_CENTER = { lat: 53.5488, lng: 9.9872 };
@@ -18,7 +19,16 @@ export default function Search() {
   const router = useRouter();
 
   const [radius, setRadius] = useState(500);
-  const [marker, setMarker] = useState<google.maps.LatLngLiteral>(DEFAULT_CENTER);
+  const [marker, setMarker] = useState<LatLngLiteral>(DEFAULT_CENTER);
+
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("@/components/map"), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false,
+      }),
+    []
+  );
 
   const [date, setDate] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 7) });
 

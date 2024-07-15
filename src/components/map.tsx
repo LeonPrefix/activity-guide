@@ -1,68 +1,48 @@
-"use client";
+import { LatLngLiteral } from "leaflet";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 
-import { CircleF, GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
-import { useState } from "react";
+import "leaflet/dist/leaflet.css";
+import { useMemo, useRef } from "react";
+import { Circle, MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 
 interface MapProps {
   radius: number;
-  marker: google.maps.LatLngLiteral;
-  setMarker: (latLng: google.maps.LatLngLiteral) => void;
+  marker: LatLngLiteral;
+  setMarker: (latLng: LatLngLiteral) => void;
+}
+
+function CustomMarker({ marker, setMarker }: Omit<MapProps, "radius">) {
+  const map = useMapEvents({
+    click(e) {
+      setMarker(e.latlng);
+    },
+  });
+
+  const markerRef = useRef<any>(null);
+
+  const eventHandlers = useMemo(
+    () => ({
+      drag() {
+        const marker = markerRef.current;
+        if (marker != null) setMarker(marker.getLatLng());
+      },
+    }),
+    [setMarker]
+  );
+
+  return <Marker position={marker} draggable={true} eventHandlers={eventHandlers} ref={markerRef} />;
 }
 
 export default function Map({ radius, marker, setMarker }: MapProps) {
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NODE_ENV === "development" ? "" : (process.env.NEXT_PUBLIC_GOOGLE_MAP_API as string),
-    libraries: ["geometry"],
-  });
-
-  const [mapRef, setMapRef] = useState<google.maps.Map>();
-  const [center, setCenter] = useState<google.maps.LatLngLiteral>({ ...marker });
-
-  if (loadError)
-    return (
-      <div className="bg-muted rounded w-full h-full flex justify-center items-center text-xl font-semibold font-mono">
-        Es ist ein Fehler aufgetreten: {loadError.message}
-      </div>
-    );
-  if (!isLoaded)
-    return (
-      <div className="bg-muted rounded w-full h-full flex justify-center items-center text-xl font-semibold font-mono animate-pulse">
-        Lade Karte...
-      </div>
-    );
-
   return (
-    <GoogleMap
-      mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "0.25rem" }}
-      zoom={15}
-      onLoad={(map) => setMapRef(map)}
-      onClick={(e) => {
-        if (!mapRef) return;
-
-        const newCenter = mapRef.getCenter();
-        if (newCenter) setCenter({ lat: newCenter?.lat(), lng: newCenter?.lng() });
-        setMarker({ lat: e.latLng?.lat() || marker.lat, lng: e.latLng?.lng() || marker.lng });
-      }}
-      options={{
-        tilt: 0,
-        center,
-        mapTypeId: "roadmap",
-        mapTypeControl: false,
-        fullscreenControl: false,
-        keyboardShortcuts: false,
-        streetViewControl: false,
-        styles: [
-          { elementType: "labels", featureType: "poi", stylers: [{ visibility: "off" }] },
-          { elementType: "labels", featureType: "transit", stylers: [{ visibility: "off" }] },
-        ],
-      }}
-    >
-      <MarkerF
-        position={marker}
-        draggable
-        onDrag={(e) => setMarker({ lat: e.latLng?.lat() || marker.lat, lng: e.latLng?.lng() || marker.lng })}
+    <MapContainer center={marker} zoom={15} className="w-full h-full">
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <CircleF center={marker} radius={radius} options={{ fillOpacity: 0.1 }} />
-    </GoogleMap>
+      <CustomMarker marker={marker} setMarker={setMarker} />
+      <Circle radius={radius} center={marker} />
+    </MapContainer>
   );
 }

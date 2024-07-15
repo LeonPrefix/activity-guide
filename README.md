@@ -22,7 +22,6 @@ pnpm install
 Erstelle eine `.env.local` Datei mit folgenden Werten:
 
 ```
-NEXT_PUBLIC_GOOGLE_MAP_API=API_KEY
 SPRING_RESULTS_HOST=http://localhost:8080/
 ```
 
